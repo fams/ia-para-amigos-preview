@@ -1,0 +1,29 @@
+:root{color-scheme:light;--paper:#fcfdfb;--halo:#edf6f3;--ink:#142c36;--muted:#3d5660;--accent:#10665c;--panel:#edf5f3;--line:#688b88;--amber:#7b3f08;--lightamber:#fff1d8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:15px Arial,sans-serif}
+main{max-width:1140px;margin:auto;display:grid;grid-template-columns:minmax(0,.82fr) minmax(0,1.5fr);align-items:start;gap:12px 16px;padding:15px}
+section{min-width:0}.eyebrow{display:flex;align-items:center;justify-content:space-between;font-weight:700;color:var(--accent);letter-spacing:.055em;text-transform:uppercase;margin-bottom:7px}
+.heading{display:flex;align-items:center;justify-content:space-between;gap:.5em;margin-bottom:7px}.heading .eyebrow{margin:0}.heading output{font-size:12px;color:var(--muted);font-weight:700;text-align:right}
+.score{font-size:12px;letter-spacing:0;color:var(--muted)}.score output{font-size:16px;color:var(--ink);margin-left:3px}
+canvas{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:8px}
+button,select{border-radius:6px;border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:5px 7px;font:inherit;font-weight:600;cursor:pointer}
+button:disabled{opacity:.55;cursor:default}button:focus-visible,select:focus-visible,input:focus-visible,canvas:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+#play{background:var(--accent);color:white;border-color:var(--accent)}
+.controls,.settings{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:7px;font-size:12px}
+.settings label{display:inline-flex;gap:4px;align-items:center;white-space:nowrap}
+#gameStatus{font-size:12px;color:var(--muted);margin:7px 0 0}.hidden{display:none}
+.diagram{position:relative;height:154px;border-radius:8px;background:var(--halo);border:1px solid var(--line);font-size:13px;font-variant-numeric:tabular-nums}
+.wires{position:absolute;inset:0;pointer-events:none}.wires line{stroke:var(--line);stroke-width:1.8}.wires line.zero{stroke-dasharray:4 3;opacity:.7}.wires line.positive{stroke:var(--accent)}.wires line.negative{stroke:var(--amber)}
+.inputs,.edgeweights{position:absolute;inset-block:0;display:grid;grid-template-rows:repeat(4,1fr);align-items:center}
+.inputs{left:1%;width:23%}.inputs div{display:flex;align-items:center;gap:5px;white-space:nowrap;border-radius:5px;background:var(--paper);padding:4px;font-size:12px;border:1px solid var(--line)}.inputs output{margin-left:auto;font-weight:bold}.inputs div:last-child{background:var(--lightamber)}
+.edgeweights{left:27%;width:20%;justify-items:center}.edgeweights output{padding:2px 4px;border-radius:3px;font-weight:700;background:var(--paper);white-space:nowrap;color:var(--accent);font-size:12px}.edgeweights output:last-child{color:var(--amber)}
+.compute>div{position:absolute;top:49%;transform:translate(-50%,-50%);display:grid;place-content:center;text-align:center;border:2px solid var(--line);background:var(--paper);border-radius:50%;min-height:47px;min-width:42px;padding:3px;line-height:1.04}.compute .sum{left:60%;min-width:54px}.compute .gate{left:78%}.compute .out{left:93%}.compute .out.active{background:var(--accent);color:white;border-color:var(--accent)}
+.symbol{font-size:23px;font-weight:700}.compute small,.compute output{font-size:11px;font-weight:700}
+.decisions{display:flex;justify-content:space-between;gap:5px;margin:7px 0 6px;font-size:12px;flex-wrap:wrap}.decisions output{margin-left:2px;font-weight:700;color:var(--accent)}
+.ws{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 8px}.ws label{display:grid;grid-template-columns:1fr auto;gap:2px;font-size:12px;background:var(--panel);padding:4px 6px;border-radius:5px;align-items:center}.ws output{font-weight:700}.ws input{display:block;width:100%;grid-column:1/-1;margin:0;accent-color:var(--accent);min-height:15px;cursor:pointer}.ws input:hover{accent-color:var(--amber)}
+.bottom{display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin-top:7px;font-size:11px}.bottom span{color:var(--muted)}
+footer{grid-column:1/-1;font-size:12px;line-height:1.4;color:var(--muted);border-top:1px solid var(--line);padding-top:6px}
+@media(min-width:950px){.diagram{height:185px}.inputs div,.edgeweights output{font-size:14px}.ws label,.settings,.controls,.decisions,.bottom{font-size:14px}.ws input{min-height:24px}}
+@media(max-width:690px){main{display:flex;flex-direction:column;gap:10px;padding:10px}section,footer{width:100%}.network{order:0}.track{order:1}footer{order:2}canvas{max-height:272px;width:auto;max-width:100%;object-fit:contain;margin-inline:auto}.controls,.settings{justify-content:center}.controls button,.settings button,.settings select,.bottom button{min-height:38px}.ws input{min-height:26px}.inputs div{font-size:10px;gap:2px;letter-spacing:-.2px}.inputs div strong{font-size:11px}.inputs{left:1%;width:27%}.edgeweights{left:29%;width:21%}.edgeweights output{font-size:10px}.compute .sum{min-width:44px}}
+@media(max-width:390px){.inputs div{font-size:9px}.compute>div{min-width:35px}.compute .sum{min-width:40px}.compute small,.compute output{font-size:10px}}
+@media(min-width:691px){.embedded main{padding:10px 13px;gap:8px 14px}.embedded canvas{max-height:205px;width:auto;max-width:100%;margin-inline:auto}.embedded #gameStatus{margin-top:5px}.embedded footer{font-size:11px}}

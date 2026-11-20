@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flappy · um perceptron no controle</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="engine.js" defer></script>
+  <script src="draw.js" defer></script>
+  <script src="ui.js" defer></script>
+</head>
+<body>
+<main>
+  <section class="track" aria-label="Pista e controles de jogo">
+    <div class="eyebrow">A pista <span class="score">Pontos <output id="score">0</output></span></div>
+    <canvas id="game" width="560" height="420" tabindex="0" aria-label="Pista do Flappy. No modo manual, pressione espaço para bater a asa.">Seu navegador não suporta canvas.</canvas>
+    <div class="controls">
+      <button id="play" type="button">Iniciar</button>
+      <button id="step" type="button">Um quadro</button>
+      <button id="reset" type="button">Reiniciar</button>
+    </div>
+    <div class="settings">
+      <label>Piloto <select id="mode"><option value="network">Perceptron</option><option value="human">Manual</option></select></label>
+      <button class="hidden" id="flap" type="button" aria-label="Bater a asa manualmente">Bater a asa</button>
+      <label id="speedLabel">Ritmo <select id="speed"><option value=".22">Lento</option><option value=".48" selected>Didático</option><option value="1">Normal</option></select></label>
+    </div>
+    <p id="gameStatus" aria-live="polite">Pausado.</p>
+  </section>
+  <section class="network" aria-label="Perceptron e seus pesos">
+    <div class="heading"><span class="eyebrow">O perceptron</span><output id="reading">Próximo quadro</output></div>
+    <div class="diagram" role="group" aria-label="Entradas multiplicadas por pesos passam ao somador, à função degrau e à saída">
+      <svg aria-hidden="true" width="100%" height="100%" viewBox="0 0 470 154" preserveAspectRatio="none" class="wires">
+        <defs><marker id="arrow" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto" viewBox="0 0 6 5"><path fill="#688b88" d="M0 0L6 2.5L0 5Z"/></marker></defs>
+        <line data-edge="0" x1="98" y1="20" x2="260" y2="75"/>
+        <line data-edge="1" x1="98" y1="58" x2="260" y2="75"/>
+        <line data-edge="2" x1="98" y1="96" x2="260" y2="75"/>
+        <line data-edge="3" x1="98" y1="134" x2="260" y2="75"/>
+        <line x1="308" y1="75" x2="348" y2="75" marker-end="url(#arrow)"/>
+        <line x1="386" y1="75" x2="419" y2="75" marker-end="url(#arrow)"/>
+      </svg>
+      <div class="inputs"><div><b>x₁</b> Distância <output id="i0"></output></div><div><b>x₂</b> Desnível <output id="i1"></output></div><div><b>x₃</b> Velocidade <output id="i2"></output></div><div><b>x₀</b> Constante <output>1</output></div></div>
+      <div class="edgeweights"><output id="e0"></output><output id="e1"></output><output id="e2"></output><output id="e3"></output></div>
+      <div class="compute">
+        <div class="sum"><span class="symbol">Σ</span><output id="sum"></output></div>
+        <div class="gate"><span class="symbol">▁▔</span><small>z ≥ 0</small></div>
+        <div class="out"><span class="symbol" id="value"></span><small>saída</small></div>
+      </div>
+    </div>
+    <div class="decisions">
+      <div><b>Decisão da rede</b> <output id="decision"></output></div>
+      <div><b>Ação na pista</b> <output id="applied"></output></div>
+    </div>
+    <div class="ws" id="weights">
+      <label for="w0"><span><b>w₁</b> Distância</span><output id="wVal0"></output><input id="w0" type="range" min="-10" max="10" step=".05"></label>
+      <label for="w1"><span><b>w₂</b> Desnível</span><output id="wVal1"></output><input id="w1" type="range" min="-10" max="10" step=".05"></label>
+      <label for="w2"><span><b>w₃</b> Velocidade</span><output id="wVal2"></output><input id="w2" type="range" min="-10" max="10" step=".05"></label>
+      <label for="w3"><span><b>b</b> Viés (+)</span><output id="wVal3"></output><input id="w3" type="range" min="-10" max="10" step=".05"></label>
+    </div>
+    <div class="bottom"><button id="preset" type="button">Pesos de referência</button><button id="zero" type="button">Zerar pesos</button><span>Zero ou positivo bate a asa. Negativo não.</span></div>
+  </section>
+  <footer><b>Como ler:</b> distância ao cano pela esquerda (0 quando alinhado); desnível e velocidade positivos apontam para baixo. As três entradas são normalizadas. O viés é peso de uma entrada fixa em 1. Os pesos de referência foram escolhidos à mão, sem treinamento.</footer>
+</main>
+</body>
+</html>
