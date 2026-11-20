@@ -4,10 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Flappy · um perceptron no controle</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=pesos-editaveis-1">
   <script src="engine.js" defer></script>
   <script src="draw.js" defer></script>
-  <script src="ui.js" defer></script>
+  <script src="ui.js?v=pesos-editaveis-1" defer></script>
 </head>
 <body>
 <main>
@@ -51,12 +51,12 @@
       <div><b>Ação na pista</b> <output id="applied"></output></div>
     </div>
     <div class="ws" id="weights">
-      <label for="w0"><span><b>w₁</b> Distância</span><output id="wVal0"></output><input id="w0" type="range" min="-10" max="10" step=".05"></label>
-      <label for="w1"><span><b>w₂</b> Desnível</span><output id="wVal1"></output><input id="w1" type="range" min="-10" max="10" step=".05"></label>
-      <label for="w2"><span><b>w₃</b> Velocidade</span><output id="wVal2"></output><input id="w2" type="range" min="-10" max="10" step=".05"></label>
-      <label for="w3"><span><b>b</b> Viés (+)</span><output id="wVal3"></output><input id="w3" type="range" min="-10" max="10" step=".05"></label>
+      <div class="weight"><label for="w0"><b>w₁</b> Distância</label><input id="wVal0" type="number" min="-10" max="10" step=".05" inputmode="decimal" aria-label="Valor: Distância"><input id="w0" type="range" min="-10" max="10" step=".05"></div>
+      <div class="weight"><label for="w1"><b>w₂</b> Desnível</label><input id="wVal1" type="number" min="-10" max="10" step=".05" inputmode="decimal" aria-label="Valor: Desnível"><input id="w1" type="range" min="-10" max="10" step=".05"></div>
+      <div class="weight"><label for="w2"><b>w₃</b> Velocidade</label><input id="wVal2" type="number" min="-10" max="10" step=".05" inputmode="decimal" aria-label="Valor: Velocidade"><input id="w2" type="range" min="-10" max="10" step=".05"></div>
+      <div class="weight"><label for="w3"><b>b</b> Viés (+)</label><input id="wVal3" type="number" min="-10" max="10" step=".05" inputmode="decimal" aria-label="Valor: Viés"><input id="w3" type="range" min="-10" max="10" step=".05"></div>
     </div>
-    <div class="bottom"><button id="preset" type="button">Pesos de referência</button><button id="zero" type="button">Zerar pesos</button><span>Zero ou positivo bate a asa. Negativo não.</span></div>
+    <div class="bottom"><button id="random" type="button" title="Sorteia pesos e reinicia na mesma pista">Sortear pesos</button><button id="preset" type="button">Pesos de referência</button><button id="zero" type="button">Zerar pesos</button><span>Zero ou positivo bate a asa. Negativo não.</span></div>
   </section>
   <footer><b>Como ler:</b> distância ao cano pela esquerda (0 quando alinhado); desnível e velocidade positivos apontam para baixo. As três entradas são normalizadas. O viés é peso de uma entrada fixa em 1. Os pesos de referência foram escolhidos à mão, sem treinamento.</footer>
 </main>

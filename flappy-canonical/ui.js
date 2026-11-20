@@ -41,9 +41,12 @@ function render(){
   $('flap').disabled=game.dead;
   $('flap').classList.toggle('hidden',$('mode').value!=='human');
 }
-function setWeights(next){
+function setWeights(next,editing=-1){
   weights=[...next];showNext=true;
-  weights.forEach((value,i)=>{$('w'+i).value=value;$('wVal'+i).textContent=format(value)});
+  weights.forEach((value,i)=>{
+    $('w'+i).value=value;
+    if (i!==editing) $('wVal'+i).value=value;
+  });
   render();
 }
 function step(){
@@ -53,12 +56,37 @@ function step(){
   showNext=false;
   render();
 }
-weights.forEach((_,i)=>$('w'+i).addEventListener('input',e=>{
-  const next=[...weights];next[i]=e.currentTarget.valueAsNumber;setWeights(next);
-}));
+function replaceWeight(i, value, editing=-1){
+  const next=[...weights];next[i]=value;setWeights(next, editing);
+}
+weights.forEach((_,i)=>{
+  const slider=$('w'+i), numeric=$('wVal'+i);
+  slider.addEventListener('input',()=>replaceWeight(i,slider.valueAsNumber));
+  numeric.addEventListener('input',()=>{
+    const value=numeric.valueAsNumber;
+    if(Number.isFinite(value)&&numeric.validity.valid)replaceWeight(i,value,i);
+  });
+  numeric.addEventListener('change',()=>{
+    const value=numeric.valueAsNumber;
+    const snapped=Math.max(-200,Math.min(200,Math.round(value*20)))/20;
+    if(Number.isFinite(value))replaceWeight(i,snapped);
+    else numeric.value=weights[i];
+  });
+  numeric.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();numeric.blur()}});
+});
 $('play').onclick=()=>{running=!running;acc=0;render()};
 $('step').onclick=step;
-$('reset').onclick=()=>{game.reset(seed);running=false;queued=false;acc=0;showNext=true;render()};
+function restart(){
+  game.reset(seed);running=false;queued=false;acc=0;showNext=true;
+}
+$('reset').onclick=()=>{restart();render()};
+$('random').onclick=()=>{
+  // Draw independently on the slider's 0.05 grid; the track seed stays fixed.
+  const draw=steps=>(Math.floor(Math.random()*(2*steps+1))-steps)/20;
+  restart();
+  $('mode').value='network';
+  setWeights([draw(60),draw(60),draw(60),draw(20)]);
+};
 $('mode').onchange=()=>{queued=false;showNext=true;render()};
 function flap(){if($('mode').value==='human'&&!game.dead){queued=true;if(!running)step()}}
 $('flap').onclick=flap;
